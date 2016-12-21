@@ -5,7 +5,7 @@ module.exports = {
   development: {
     rootPath: rootPath,
     db: 'mongodb://localhost/frontcamp',
-    port: process.env.PORT || 3000
+    port: process.env.PORT || 3030
   },
   production: {
     rootPath: rootPath,

@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  .container
+    h1 Blog Page
+    p.lead Do you want to add new post?
+    br
+    form(role='form', action="/blog",method="post", style='max-width: 300px;')
+      button.btn.btn-default(type='submit') Yes
+      &nbsp;
+      a(href='/')
+        button.btn.btn-primary(type="button") Cancel
+
+
+

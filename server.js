@@ -1,9 +1,10 @@
 var express = require('express'),
   mongoose = require('mongoose'),
+  path = require('path'),
   bodyParser = require('body-parser'),
   passport = require('passport'),
   cookieParser = require('cookie-parser'),
-    methodOverride = require('method-override'),
+  methodOverride = require('method-override'),
   cors = require('cors'),
   app = express();
 
@@ -22,7 +23,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(methodOverride());
 app.use(cookieParser());
-app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade'); //app.set('view engine', 'ejs');
 app.use(require('express-session')({
     secret: 'keyboard cat',
     resave: false,

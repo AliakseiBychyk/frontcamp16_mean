@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  .container
+    h1 New Post
+    p.lead You are going to add a new post
+    br
+    form(role='form', action="/newpost", method="post", style='max-width: 300px;')
+      .form-group
+          input.form-control(type='text', name="title", placeholder='Subject')
+      .form-group
+          input.form-control(type='text', name="body", placeholder='Post body')
+      .form-group
+          input.form-control(type='text', name="permalink", placeholder='Permalink')
+      .form-group
+          input.form-control(type='text', name="author", placeholder='Author')
+      .form-group
+          input.form-control(type='text', name="tags", placeholder='Tags')
+      .form-group
+          input.form-control(type='date', name="date", placeholder='Date')
+      button.btn.btn-default(type='submit') Submit 
+        &nbsp;
+      a(href='/')
+        button.btn.btn-primary(type="button") Cancel

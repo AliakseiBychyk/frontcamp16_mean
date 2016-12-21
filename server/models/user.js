@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     passportLocalMongoose = require('passport-local-mongoose');
 
 var User = new mongoose.Schema({
-  _id: { type: String, required: true},
+  username: { type: String, required: true},
   email: { type: String, match: /.+@.+\..+/, lowercase: true },
   password: String
 });
@@ -12,6 +12,6 @@ var User = new mongoose.Schema({
 // the hashed password and the salt value
 
 // configure to use _id for username field (previously email)
-User.plugin(passportLocalMongoose, { usernameField: '_id' });
+User.plugin(passportLocalMongoose, { usernameField: 'username' });
 
 module.exports = mongoose.model('User', User);
