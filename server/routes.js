@@ -7,31 +7,14 @@ var express = require('express'),
   router = express.Router();
 
 module.exports = function(app, passport){  
-  // app.use('/api', apiRouter);
+
   app.use('/', router);
 
   // API routes
-  // require('./api/posts')(apiRouter);
 
-  // home route
   router.get('/', function(req, res, next) {
     res.render('index', { user: req.user });
   });
-
-  // admin route
-  /*
-  router.get('/admin', function (req, res) {
-    res.render('admin/login');
-  });
-
-  router.get('/admin/register', function(req, res) {
-    res.render('admin/register');
-  });
-
-  router.get('/admin/dashboard', isAdmin, function(req, res){
-    res.render('admin/dashboard', {user: req.user});
-  });
-  */
 
   router.get('/register', function(req, res) {
     res.render('register', {});
@@ -79,6 +62,8 @@ module.exports = function(app, passport){
   });
 
   router.post('/newpost', function (req, res) {
+    console.log('POST: ');
+    console.log(req.body);
     var post = new Post({
       title: req.body.title,
       body: req.body.body,
@@ -87,17 +72,17 @@ module.exports = function(app, passport){
       tags: req.body.tags,
       date: req.body.date
     });
-    post.save(function (err, post) {
+    post.save(function (err) {
       if (err) {
-        console.error(err);
+        return console.error(err);
         return res.render('newpost', {});
+      } else {
+        return console.log('created');
       }
-      console.log('post successfully added to database');
-      res.redirect('/blog');
+      return res.send(post);
+            res.redirect('/blog');
     });
   });
-  
-
 
   app.use(function(req, res, next){
     res.status(404);
