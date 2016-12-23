@@ -10,6 +10,18 @@ block content
       &nbsp;
       a(href='/')
         button.btn.btn-primary(type="button") Cancel
+  .container
+    h1 Latest Posts
+    p
+      for post in posts
+        h2 #{post.title}
+        p= post.body
+        p Written by #{post.author}
+        p tags: 
+          for tag in post.tags
+            span #{tag}, &nbsp;
+        p published: #{post.date}
+
 
 
 

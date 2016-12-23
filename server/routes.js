@@ -3,14 +3,11 @@ var express = require('express'),
   User = require('./models/user'),
   Post = require('./models/post'),
   rootPath = path.normalize(__dirname + '/../'),
- // apiRouter = express.Router(),
   router = express.Router();
 
 module.exports = function(app, passport){  
 
   app.use('/', router);
-
-  // API routes
 
   router.get('/', function(req, res, next) {
     res.render('index', { user: req.user });
@@ -22,7 +19,6 @@ module.exports = function(app, passport){
 
   router.post('/register', function(req, res){
 
-    // passport-local-mongoose: Convenience method to register a new user instance with a given password. Checks if username is unique
     User.register(new User({
       username: req.body.username, email: req.body.email
     }), req.body.password, function(err, user) {
@@ -31,10 +27,8 @@ module.exports = function(app, passport){
               return res.render('register', { user: user });
           }
 
-          // log the user in after it is created
           passport.authenticate('local')(req, res, function(){
             console.log('authenticated by passport');
-            //res.send('You successfully registered on this page!')
             res.redirect('/blog');
           });
       });
@@ -45,17 +39,19 @@ module.exports = function(app, passport){
   });
 
   router.post('/login', passport.authenticate('local'), function (req, res, next) {
-    // res.send('You successuflly entered');
     res.redirect('/blog');
   });
 
   router.get('/blog', function (req, res) {
-    res.render('blog', { user: req.user });
-  })
+    Post.find({}).sort({ date: -1 }).exec(function (err, posts) {
+      if (err) throw error;
+      res.render('blog', { posts: posts });
+    });
+  });
 
   router.post('/blog', function (req, res) {
     res.redirect('/newpost');
-  })
+  });
 
   router.get('/newpost', function(req, res) {
     res.render('newpost', {});
@@ -69,7 +65,7 @@ module.exports = function(app, passport){
       body: req.body.body,
       permalink: req.body.permalink,
       author: req.body.author,
-      tags: req.body.tags,
+      tags: req.body.tags.split(", "),
       date: req.body.date
     });
     post.save(function (err) {
@@ -77,10 +73,8 @@ module.exports = function(app, passport){
         return console.error(err);
         return res.render('newpost', {});
       } else {
-        return console.log('created');
+        res.redirect('/blog');
       }
-      return res.send(post);
-            res.redirect('/blog');
     });
   });
 
@@ -92,13 +86,3 @@ module.exports = function(app, passport){
   });
   
 };
-
-function isAdmin(req, res, next){
-  if(req.isAuthenticated() && req.user.email === 'connorleech@gmail.com'){
-    console.log('cool you are an admin, carry on your way');
-    next();
-  } else {
-    console.log('You are not an admin');
-    res.redirect('/admin');
-  }
-}

@@ -9,7 +9,7 @@ module.exports = {
   },
   production: {
     rootPath: rootPath,
-    db: process.env.MONGOLAB_URI || 'mongodb://Aleks:frontCamp16@ds147537.mlab.com:47537/frontcamp16',
+    db: process.env.MONGOLAB_URI || 'mongodb://ds147537.mlab.com:47537/frontcamp16',
     port: process.env.PORT || 80
   }
 };

@@ -5,9 +5,9 @@ var postSchema = new mongoose.Schema({
   body: { type: String, required: true },
   permalink: { type: String, required: true, unique: true },
   author: { type: String, required: true },
-  tags: {
-    title: String
-  },
+  tags: [
+    { type: String }
+  ],
   comments: [{
     body: String,
     num_likes: { type: Number, default: 0 },
