@@ -10,7 +10,7 @@ module.exports = function(app, passport){
   app.use('/', router);
 
   router.get('/', function(req, res, next) {
-    res.render('index', { user: req.user });
+    res.render('index', { title: "Aleks's Blog", user: req.user });
   });
 
   router.get('/register', function(req, res) {
@@ -20,7 +20,8 @@ module.exports = function(app, passport){
   router.post('/register', function(req, res){
 
     User.register(new User({
-      username: req.body.username, email: req.body.email
+      username: req.body.username,
+      email: req.body.email
     }), req.body.password, function(err, user) {
           if (err) {
               console.error(err);
