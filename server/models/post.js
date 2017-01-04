@@ -13,7 +13,7 @@ var postSchema = new mongoose.Schema({
     num_likes: { type: Number, default: 0 },
     email: { type: String, match: /.+@.+\..+/, lowercase: true}
   }],
-  date: { type: Date, default: Date.now },
+  date: { type: Date, default: Date.now, required: true },
 });
 
 
