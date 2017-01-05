@@ -13,6 +13,10 @@ module.exports = function(app, passport){
     res.render('index', { title: "Aleks's Blog", user: req.user });
   });
 
+  router.get('/logout', function (req, res) {
+    res.redirect('index');
+  });
+
   router.get('/register', function(req, res) {
     res.render('register', {});
   });
@@ -81,7 +85,6 @@ module.exports = function(app, passport){
 
   app.use(function(req, res, next){
     res.status(404);
-
     res.render('404');
     return;
   });
