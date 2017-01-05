@@ -14,7 +14,8 @@ module.exports = function(app, passport){
   });
 
   router.get('/logout', function (req, res) {
-    res.redirect('index');
+    req.logout();
+    res.redirect('/');
   });
 
   router.get('/register', function(req, res) {
