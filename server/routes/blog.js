@@ -1,15 +1,18 @@
 const express = require('express');
 const path = require('path');
 const Post = require('../models/post');
-//const User = require('../models/user');
 const rootPath = path.normalize(__dirname + '/../');
 const router = express.Router();
+const myPostFunction = require('../controllers/post.js');
 
 router.get('/', function (req, res) {
+  
   Post.find({}).sort({ date: -1 }).exec(function (err, posts) {
     if (err) throw error;
     res.render('blog', { posts: posts });
   });
+  
+  //myPostFunction(Post);
 });
 
 router.post('/', function (req, res) {
@@ -21,7 +24,6 @@ router.get('/newpost', function(req, res) {
 });
 
 router.post('/newpost', function (req, res) {
-  console.log('POST: ');
   console.log(req.body);
   var post = new Post({
     title: req.body.title,
@@ -31,6 +33,7 @@ router.post('/newpost', function (req, res) {
     tags: req.body.tags.split(", "),
     date: req.body.date
   });
+  
   post.save(function (err) {
     if (err) {
       return console.error(err);
