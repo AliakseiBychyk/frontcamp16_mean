@@ -1,15 +1,16 @@
-var express = require('express'),
-  mongoose = require('mongoose'),
-  path = require('path'),
-  bodyParser = require('body-parser'),
-  passport = require('passport'),
-  cookieParser = require('cookie-parser'),
-  methodOverride = require('method-override'),
-  cors = require('cors'),
-  app = express();
+const express = require('express');
+const mongoose = require('mongoose');
+const path = require('path');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const methodOverride = require('method-override');
+const cors = require('cors');
+const assert = require('assert');
+const app = express();
 
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
-  envConfig = require('./server/env')[env];
+const env = process.env.NODE_ENV || 'development';
+const envConfig = require('./server/env')[env];
 
 mongoose.connect(envConfig.db);
 
@@ -31,7 +32,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
 
-require('./server/routes')(app, passport);
+require('./server/routes/index.js')(app, passport);
 
 app.listen(envConfig.port, function(){
   console.log('Server listening on port ' + envConfig.port)

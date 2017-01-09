@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  .container
+    h1= user.username
+    p.lead Additional info about #{user.username}
+    br
+    p
+      h2= user.email

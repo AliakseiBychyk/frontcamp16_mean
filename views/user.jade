@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  .container
+    h1= user
+    p.lead You entered as #{user}
+    br
+    a(href="/user/"+ user +"/about") Check this user
+
