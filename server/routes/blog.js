@@ -3,16 +3,17 @@ const path = require('path');
 const Post = require('../models/post');
 const rootPath = path.normalize(__dirname + '/../');
 const router = express.Router();
-const myPostFunction = require('../controllers/post.js');
+const PostDAO = require('../controllers/post.js').PostDAO;
+
+const posts = new PostDAO(Post);
 
 router.get('/', function (req, res) {
   
-  Post.find({}).sort({ date: -1 }).exec(function (err, posts) {
-    if (err) throw error;
+  // logic placed to controller
+  posts.getPosts(function (posts) {
     res.render('blog', { posts: posts });
   });
-  
-  //myPostFunction(Post);
+
 });
 
 router.post('/', function (req, res) {
