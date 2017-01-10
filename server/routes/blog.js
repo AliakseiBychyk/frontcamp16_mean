@@ -9,7 +9,7 @@ const posts = new PostDAO(Post);
 
 router.get('/', function (req, res) {
   
-  // logic placed to controller
+  // logic placed in controller
   posts.getPosts(function (posts) {
     res.render('blog', { posts: posts });
   });

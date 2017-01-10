@@ -3,6 +3,9 @@ const path = require('path');
 const User = require('../models/user');
 const rootPath = path.normalize(__dirname + '/../');
 const router = express.Router();
+const UserDAO = require('../controllers/user.js').UserDAO;
+
+const users = new UserDAO(User);
 
 router.get('/', function (req, res) {
   res.send('Type username in address bar, e.g.: "localhost:3030/user/AnyUserName" ');
@@ -15,13 +18,16 @@ router.get('/:user', function (req, res) {
 });
 
 router.get('/:user/about', function (req, res) {
-  User.findOne({username: req.params.user}).exec(function (err, user) {
-    if (err) throw error;
-    if (!user) {
-        res.redirect('/:user');
-    };  
-    res.render('about', { user: user });
-  });
+
+  // logic placed in controller
+  users.getUser(req.params.user, function (user) {
+    if (!user) res.redirect('/:user'); 
+    res.render('about', { user: user }); 
+  })   
 });
 
 module.exports = router;
+
+
+
+
